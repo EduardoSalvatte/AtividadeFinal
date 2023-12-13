@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Somativa.Models.Produto>
+
+@{
+    ViewData["Title"] = "Relatório de Produtos";
+
+    List<Categoria> categorias = new List<Categoria>();
+    categorias.Add(new Categoria { CategoriaId = new Guid(), Nome = "Todas" });
+    var categ = ViewData["Categ"] as List<Categoria>;
+
+    foreach (var item in categ)
+    {
+        categorias.Add(new Categoria { CategoriaId = item.CategoriaId, Nome = item.Nome });
+    }
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Relatório de Produtos</h1>
+
+<!--
+<img src="@Url.Action("GetImage", "Relatorio", new { imageName = "imagem.png" })" alt="Descrição da imagem">
+-->
+<form>
+    <div class="row justify-content-center mt-3">
+        <div class="col-12 col-sm-6 col-md-3 col-lg-1 mt-2">
+            <label class="fw-bold" style="font-family: 'Cantata One';">Categoria:</label>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-9 col-lg-4 mb-3">
+            <div class="col">
+                <select name="inCategoria" class="form-select">
+                    @foreach (var item in categorias)
+                    {
+                        <option value="@item.CategoriaId">@item.Nome</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+
+        <div class="col-12 col-sm-6 col-md-3 col-lg-1 mt-2">
+            <label class="fw-bold" style="font-family: 'Cantata One';">Nome:</label>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-9 col-lg-4 mb-3">
+            <input name="inNome" type="text" class="form-control" />
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-6 col-lg d-flex align-items-end mb-3">
+            <button asp-action="SearchProd" value="Filtrar" class="btn btn-success w-100" style="height: 35px; font-family: 'Cantata One'; background-color: #379747; border-radius: 15px;">
+                Filtrar
+            </button>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped mt-4">
+        <thead style="background-color: #65846A; border: none;">
+            <tr style="border:none; font-family: 'Cantata One';">
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Categoria.Nome)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Estoque)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Preco)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @{
+                var n = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: @(n % 2 == 0 ? "#C9DABC" : "#DDE9D4")">
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Categoria.Nome)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Estoque)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Preco)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 

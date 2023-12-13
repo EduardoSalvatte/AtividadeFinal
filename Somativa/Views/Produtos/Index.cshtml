@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Somativa.Models.Produto>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Produtos</h1>
+
+<p style="margin: 20px 0px 20px 0px; font-family: 'Cantata One';">
+    <a asp-action="Create"  class="btn btn-success">Adicionar</a>
+</p>
+<div class="container" >
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+            <div class="col-md-4 mb-4">
+                <div class="card" style="border-radius: 30px 30px 30px 30px;">
+                    <div class="image-container d-flex justify-content-center align-items-center" style="width 300px; height: 200px;">
+                        <img src="~/uploads/@item.Imagem" alt="Imagem do Produto" style="width: 90%; height: 90%;" />
+                    </div>
+                    <form method="post" enctype="multipart/form-data" asp-action="UploadImage">
+                        <input type="hidden" name="produtoId" value="@item.ProdutoId" />
+
+                        <!-- card -->
+                        <div class="card-body mt-2">
+                            <h3 class="card-title">@item.Nome</h3>
+                            <p class="card-text"><b>Estoque:</b> @item.Estoque</p>
+                            <p class="card-text"><b>Preço:</b> @item.Preco</p>
+                            <p class="card-text"><b>Categoria:</b> @item.Categoria.Nome</p>
+                            <p class="card-text"><b>Fornecedor:</b> @item.Fornecedor.Nome</p>
+
+                            <!-- Botões de Ação -->
+                            <div class="text-center">
+                                <a asp-action="Edit" class="btn" asp-route-id="@item.ProdutoId" data-bs-toggle="tooltip"
+                                   data-bs-tittle="Detalhes"
+                                   data-bs-placement="bottom">
+                                    <svg bootstrap-icon="PencilSquare" width="24" height="24" class="text-success"></svg>
+                                </a>
+
+                                <a asp-action="Details" class="btn" asp-route-id="@item.ProdutoId" data-bs-toggle="modal" data-bs-target="#modalDetalhes_@item.ProdutoId"
+                                   data-bs-tittle="Detalhes"
+                                   data-bs-placement="bottom">
+                                    <svg bootstrap-icon="InfoCircleFill" width="24" height="24" class="text-primary"></svg>
+                                </a>
+
+                                <a asp-action="Delete" class="btn" asp-route-id="@item.ProdutoId" data-bs-toggle="modal" data-bs-target="#exampleModal_@item.ProdutoId"
+                                   data-bs-tittle="Excluir"
+                                   data-bs-placement="bottom">
+                                    <svg bootstrap-icon="XCircleFill" width="24" height="24" class="text-danger"></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="exampleModal_@item.ProdutoId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que você deseja excluir?
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete" class="text-white" asp-route-id="@item.ProdutoId">
+                        <input type="hidden" asp-for="@item.ProdutoId" />
+                        <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" value="Apagar" class="btn btn-danger mt-2">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDetalhes_@item.ProdutoId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDetalhesLabel">Informações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Nota Fiscal:</b> @item.Nome</p>
+                    <p><b>Cliente:</b> @item.Estoque</p>
+                    <p><b>Preço:</b> @item.Preco</p>
+                    <p><b>Categoria:</b> @item.CategoriaId</p>
+                    <p><b>Data e Hora:</b> @item.FornecedorId</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/js/selecionarImagem.js"></script>

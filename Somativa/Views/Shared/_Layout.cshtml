@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Somativa</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Somativa.styles.css" asp-append-version="true" />
+    <!-- Link das fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Niconne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cantata+One&display=swap" rel="stylesheet">
+
+</head>
+<body style="background-color: #F5F5F5;">
+    <header>
+        <nav class="navbar" style="background-color: #323E34">
+            <div class="container-fluid">
+                <a class="navbar-brand fs-1 text-white ms-3" asp-controller="Home" asp-action="Index" style="font-family: 'Niconne';">EcoTrendy</a>
+
+                <div class="d-flex d-none d-md-flex flex-grow-1 justify-content-center align-items-center ">
+                    <form class="input-group" style="max-width: 500px;">
+                        <input type="text" class="form-control rounded-pill" placeholder="Pesquisar..." aria-label="Pesquisar" style="max-height: 200px; font-family: 'Cantata One'; color: #303C32;" /> 
+                    </form>
+                </div>
+
+                <div class="ms-3 m-3">
+                    <partial name="_LoginPartial" />
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation" style="color:white; outline: none;">
+                    <svg bootstrap-icon="List" width="50" height="50" aria-label="Curtir" class="" style="color:white; outline: none;"></svg>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #546657; margin-top: 80px; margin-right: 25px; max-height: 530px; max-width: 90%; border-radius: 20px; border: 2px solid #F1F1F1; box-shadow: 4px 4px black;">
+
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav flex-grow-1 m-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Clientes" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Fornecedores" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Fornecedores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Categorias" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Categorias</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Produtos" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Produtos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Vendas" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Vendas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Compras" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Compras</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Relatorio" asp-action="RelatProd" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Relatório de Produtos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Relatorio" asp-action="RelatMov" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Relatório de Movimentações</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Catalogo" asp-action="Index" style="font-size: 18px; font-family: 'Cantata One'; text-shadow: 2px 2px black">Catálogo</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a class="nav-link text-center m-3" asp-area="" asp-controller="Home" asp-action="Privacy" style="color: #20D926; font-size: 18px; font-family: 'Cantata One';">
+                        <svg bootstrap-icon="ShieldLock" width="24" height="24" aria-label="Curtir" class="me-2"></svg>
+                        <u>Privacidade</u>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+
+
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted text-center fs-4" style="background-color: #323E34">
+        <div class="container text-white">
+            Todos os direitos reservados ©
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

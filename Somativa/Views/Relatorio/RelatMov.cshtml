@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Somativa.Models.Movimentacao>
+
+@{
+    ViewData["Title"] = "Relatório de Movimentações";
+    var prod = ViewData["Produtos"] as List<Produto>;
+    prod.Insert(0, new Produto { ProdutoId = new Guid(), Nome = "Todos" });
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Relatório de Movimentações</h1>
+
+
+<form>
+    <div class="mt-4 mb-3 row" style="font-family: 'Cantata One';">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3 d-flex align-items-center">
+            <label class="fw-bold me-2">Data início:</label>
+            <input name="inDataIni" type="date" class="ms-2 form-control" style="height: 40px;" />
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3 d-flex align-items-center">
+            <label class="fw-bold me-2">Data fim:</label>
+            <input name="inDataFim" type="date" class="ms-2 form-control" style="height: 40px;" />
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-3 d-flex align-items-center">
+            <label class="fw-bold me-2">Tipo de movimentação</label>
+            <select name="inTipo" class="ms-3 me-3 form-select" style="height: 35px;">
+                <option value="0">Todos</option>
+                <option value="1">Entradas</option>
+                <option value="2">Saídas</option>
+            </select>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3 col-lg-3 mb-3 d-flex align-items-center">
+            <label class="fw-bold me-2">Produto:</label>
+            <select name="inProduto" class="ms-3 me-3 form-select" style="height: 35px;">
+                @foreach (var item in prod)
+                {
+                    <option value="@item.Nome">@item.Nome</option>
+                }
+            </select>
+        </div>
+        <div class="col-sm-8 col-md-3 col-lg-2 mb-3">
+            <button asp-action="SearchMov" value="Filtrar" class="btn text-white align-items-center justify-content-center d-inline-flex"
+                    style="font-family: 'Cantata One'; background-color: #379747;
+                    border-radius: 15px; width: 100%; height: 35px;">Filtrar
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+<div class="table-responsive">
+    <table class="table table-striped mt-1">
+        <thead style="background-color: #65846A; border: none;">
+            <tr style="border:none; font-family: 'Cantata One';">
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Nota)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.DataHora)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.TipoMovimentacao)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Produto)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Quantidade)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Unitario)
+                </th>
+
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @{
+                var n = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: @(n % 2 == 0 ? "#C9DABC" : "#DDE9D4")">
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Nota)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.DataHora)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.TipoMovimentacao)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Produto)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Unitario)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="d-flex">
+        <li class="nav-item ms-3" style="float: left;">
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item ms-3" style="float: right;">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button class="submit" style="background-color: #323E34; border: none;">
+                    <svg bootstrap-icon="BoxArrowRight" width="32" height="34" aria-label="Logout" class="" style="color: white;"></svg>
+                </button>
+            </form>
+        </li>
+        </div>
+    }
+    else
+    {
+        <div class="d-flex">
+        <li class="nav-item" style="float: left;">
+            <a class="nav-link text-white fs-5" style="font-family: 'Cantata One';" asp-area="Identity" asp-page="/Account/Register">Cadastrar /</a>
+        </li>
+        <li class="nav-item" style="float: right;">
+            <a class="nav-link text-white fs-5" style="font-family: 'Cantata One';" asp-area="Identity" asp-page="/Account/Login"> Login</a>
+        </li>
+        </div>
+    }
+</ul>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Somativa.Models.Compra>
+
+@{
+    ViewData["Title"] = "Compras";
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Compras</h1>
+
+<p style="margin: 20px 0px 20px 0px; font-family: 'Cantata One';">
+    <a asp-action="Create" class="btn btn-success">Adicionar</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead style="background-color: #65846A; border: none;">
+            <tr style="border:none; font-family: 'Cantata One';">
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Nota)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.DataHora)
+                </th>
+                <th class="text-white fw-normal"></th>
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @{
+                var n = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: @(n % 2 == 0 ? "#C9DABC" : "#DDE9D4")">
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Nota)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.DataHora)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn" asp-route-id="@item.CompraId" data-bs-toggle="tooltip"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="PencilSquare" width="24" height="24" class="text-success"></svg>
+                        </a>
+
+                        <a asp-action="Details" class="btn" asp-route-id="@item.CompraId" data-bs-toggle="modal" data-bs-target="#modalDetalhes_@item.CompraId"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="InfoCircleFill" width="24" height="24" class="text-primary"></svg>
+                        </a>
+
+                        <a asp-action="Delete" class="btn" asp-route-id="@item.CompraId" data-bs-toggle="modal" data-bs-target="#exampleModal_@item.CompraId"
+                           data-bs-tittle="Excluir"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="XCircleFill" width="24" height="24" class="text-danger"></svg>
+                        </a>
+
+                        <a asp-controller="CompraItems" asp-action="Index" class="btn" asp-route-id="@item.CompraId" data-bs-toggle="tooltip"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="Basket2Fill" width="24" height="24" class="text-dark"></svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

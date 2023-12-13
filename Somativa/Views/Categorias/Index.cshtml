@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Somativa.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Categorias";
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Categorias</h1>
+
+<p style="margin: 20px 0px 20px 0px; font-family: 'Cantata One';">
+    <a asp-action="Create" class="btn btn-success">Adicionar</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead style="background-color: #65846A; border: none;">
+            <tr style="border:none; font-family: 'Cantata One';">
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th class="text-white fw-normal"></th>
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @{
+                var n = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: @(n % 2 == 0 ? "#C9DABC" : "#DDE9D4")">
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn" asp-route-id="@item.CategoriaId" data-bs-toggle="tooltip"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="PencilSquare" width="24" height="24" class="text-success"></svg>
+                        </a>
+
+                        <a asp-action="Details" class="btn" asp-route-id="@item.CategoriaId" data-bs-toggle="modal" data-bs-target="#modalDetalhes_@item.CategoriaId"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="InfoCircleFill" width="24" height="24" class="text-primary"></svg>
+                        </a>
+
+                        <a asp-action="Delete" class="btn" asp-route-id="@item.CategoriaId" data-bs-toggle="modal" data-bs-target="#exampleModal_@item.CategoriaId"
+                           data-bs-tittle="Excluir"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="XCircleFill" width="24" height="24" class="text-danger"></svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="exampleModal_@item.CategoriaId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que você deseja excluir?
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete" class="text-white" asp-route-id="@item.CategoriaId">
+                        <input type="hidden" asp-for="@item.CategoriaId" />
+                        <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" value="Apagar" class="btn btn-danger mt-2">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDetalhes_@item.CategoriaId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDetalhesLabel">Informações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Nome:</b> @item.Nome</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

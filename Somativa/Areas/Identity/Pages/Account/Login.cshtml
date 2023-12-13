@@ -1,0 +1,60 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row mt-5">
+    <div class="col-md-4 m-auto">
+        <h1 class="text-center">@ViewData["Title"]</h1>
+        <section>
+            <form id="account" method="post">
+
+                <hr />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <svg bootstrap-icon="Envelope" width="30" height="30" aria-label="Curtir" class="m-2"></svg>
+                        </span>
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="E-mail" />
+                    </div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <svg bootstrap-icon="LockFill" width="30" height="30" aria-label="Curtir" class="m-2"></svg>
+                        </span>
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Senha" />
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="checkbox mb-3">
+                    <label>
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        Lembrar de mim?
+                    </label>
+                    <a id="forgot-password" asp-page="./ForgotPassword" class="float-end" style="color: #00B906;">Esqueceu sua senha?</a>
+                </div>
+                <div class="d-flex mt-2 justify-content-center">
+                    <button id="login-submit" type="submit" class="btn text-white" style="font-family: 'Cantata One'; width: 220px; height: 60px; background-color: #6BA083; margin: auto; border-radius: 15px 15px 15px 15px;">ENTRAR</button>
+                </div>
+                <div class="d-flex mt-3 justify-content-center">
+                    <p>
+                        <div class="fw-bold">Ainda não tem uma conta? </div>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" style="color: #00B906;">CADASTRE-SE</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

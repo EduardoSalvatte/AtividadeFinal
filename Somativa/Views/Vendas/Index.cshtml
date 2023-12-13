@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Somativa.Models.Venda>
+
+@{
+    ViewData["Title"] = "Vendas";
+}
+
+<h1 class="mt-5" style="font-family: 'Cantata One';">Vendas</h1>
+
+<p style="margin: 20px 0px 20px 0px; font-family: 'Cantata One';">
+    <a asp-action="Create" class="btn btn-success">Adicionar</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead style="background-color: #65846A; border: none;">
+            <tr style="border:none; font-family: 'Cantata One';">
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Nota)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </th>
+                <th class="text-white fw-normal">
+                    @Html.DisplayNameFor(model => model.DataHora)
+                </th>
+                <th class="text-white fw-normal"></th>
+            </tr>
+        </thead>
+        <tbody class="table-striped">
+            @{
+                var n = 0;
+            }
+            @foreach (var item in Model)
+            {
+                <tr style="background-color: @(n % 2 == 0 ? "#C9DABC" : "#DDE9D4")">
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Nota)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        @Html.DisplayFor(modelItem => item.DataHora)
+                    </td>
+                    <td style="font-family: 'Cantata One';">
+                        <a asp-action="Edit" class="btn" asp-route-id="@item.VendaId" data-bs-toggle="tooltip"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="PencilSquare" width="24" height="24" class="text-success"></svg>
+                        </a>
+
+                        <a asp-action="Details" class="btn" asp-route-id="@item.VendaId" data-bs-toggle="modal" data-bs-target="#modalDetalhes_@item.VendaId"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="InfoCircleFill" width="24" height="24" class="text-primary"></svg>
+                        </a>
+
+                        <a asp-action="Delete" class="btn" asp-route-id="@item.VendaId" data-bs-toggle="modal" data-bs-target="#exampleModal_@item.VendaId"
+                           data-bs-tittle="Excluir"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="XCircleFill" width="24" height="24" class="text-danger"></svg>
+                        </a>
+
+                        <a asp-controller="VendaItems" asp-action="Index" class="btn" asp-route-id="@item.VendaId" data-bs-toggle="tooltip"
+                           data-bs-tittle="Detalhes"
+                           data-bs-placement="bottom">
+                            <svg bootstrap-icon="Basket2Fill" width="24" height="24" class="text-dark"></svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="exampleModal_@item.ClienteId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deletar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que você deseja excluir?
+                </div>
+                <div class="modal-footer">
+                    <form asp-action="Delete" class="text-white" asp-route-id="@item.ClienteId">
+                        <input type="hidden" asp-for="@item.ClienteId" />
+                        <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" value="Apagar" class="btn btn-danger mt-2">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDetalhes_@item.ClienteId" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modalDetalhesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalDetalhesLabel">Informações</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Nota Fiscal:</b> @item.Nota</p>
+                    <p><b>Cliente:</b> @item.Cliente</p>
+                    <p><b>Data e Hora:</b> @item.DataHora</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,48 @@
+﻿@model Somativa.Models.CompraItem
+
+@{
+    ViewData["Title"] = "Adicionar";
+    var CompraIdAux = ViewData["CompraId"];
+}
+
+<h1 class="text-center mt-5" style="font-family: 'Cantata One';">Adicionar Compra de Item</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4 m-auto align-items-center">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompraId" class="control-label" style="font-family: 'Cantata One';"></label>
+                <input asp-for="CompraId" value="@CompraIdAux" class="form-control form-control-lg" readonly />
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="ProdutoId" class="control-label" style="font-family: 'Cantata One';"></label>
+                <select asp-for="ProdutoId" class="form-control form-control-lg" asp-items="ViewBag.ProdutoId"></select>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Quantidade" class="control-label" style="font-family: 'Cantata One';"></label>
+                <input asp-for="Quantidade" class="form-control form-control-lg" />
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-2">
+                <label asp-for="Unitario" class="control-label" style="font-family: 'Cantata One';"></label>
+                <input asp-for="Unitario" class="form-control form-control-lg" />
+                <span asp-validation-for="Unitario" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex mt-4 justify-content-center">
+                <div class="form-group me-3">
+                    <input type="submit" value="Adicionar" class="btn text-white" style="font-family: 'Cantata One'; background-color: #379747; border-radius: 15px 15px 15px 15px; width: 140px; height: 50px;" />
+                </div>
+                <div class="form-group ms-3">
+                    <a asp-action="Index" asp-route-id="@ViewBag.CompraId" class="btn text-white d-flex justify-content-center align-items-center" style="font-family: 'Cantata One'; background-color: #F82D2D; border-radius: 15px 15px 15px 15px; width: 140px; height: 50px;">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
